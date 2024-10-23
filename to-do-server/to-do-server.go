@@ -67,7 +67,11 @@ func run() {
 		os.Exit(1)
 	}
 	if *mode == "pgdb" {
-		store, _ = datastores.NewPGDatastore(*user, *password, dbname)
+		store, err := datastores.NewPGDatastore(*user, *password, dbname)
+		if err != nil {
+			fmt.Println("Error connecting to postgres: ", err)
+			os.Exit(1)
+		}
 		defer store.Close()
 	}
 	if *mode == "in-mem" {

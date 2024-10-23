@@ -220,5 +220,9 @@ func NewPGDatastore(user string, password string, database string) (DataStore, e
 	if err != nil {
 		return &PGDB{db: nil, connStr: ""}, err
 	}
+	err = db.Ping()
+	if err != nil {
+		return &PGDB{db: nil, connStr: ""}, err
+	}
 	return &PGDB{db: db, connStr: connStr}, nil
 }
