@@ -76,21 +76,23 @@ func cli() {
 	}
 	ctx := logging.AddTraceID(context.Background())
 	client := apiclient.NewAPIClient("http://localhost:8081/")
-	if !*post && !*put && !*get {
-		err = errors.New("no method flag provided. requires 1 of --<post|put|get>")
-		fmt.Println(err)
-		os.Exit(1)
-	}
+
 	if *version != "v1" && *version != "v2" {
 		err = errors.New("missing required flag of --version=<v1|v2>")
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
 	for _, action := range cliactions {
 		if *action.flag {
 			action.do(todoflags, client, ctx)
+			os.Exit(0)
 		}
 	}
+
+	err = errors.New("no method flag provided. requires 1 of --<post|put|get>")
+	fmt.Println(err)
+	os.Exit(1)
 }
 
 func main() {
