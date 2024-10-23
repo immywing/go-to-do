@@ -29,7 +29,6 @@ var (
 
 func cli() {
 	flag.Parse()
-	fmt.Println("password: ", os.Getenv("password"))
 	todoflags := map[string]string{
 		"user-id":  *userId,
 		"id":       *id,
@@ -82,11 +81,12 @@ func cli() {
 		fmt.Println("PUT success! API response:\n", item)
 	}
 	if *get {
-		item, err = models.NewToDo(userId, id, title, priority, complete)
-		if err != nil {
-			err = fmt.Errorf("failed to create to do item with flags of: %s", todoflags)
-			fmt.Println(err)
-			os.Exit(1)
+		item = models.ToDo{
+			Id:       uuid.Max,
+			UserId:   *userId,
+			Title:    *title,
+			Priority: *priority,
+			Complete: *complete,
 		}
 		item, err = client.Req(ctx, "GET", item, todoflags)
 		if err != nil {
