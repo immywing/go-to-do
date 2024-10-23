@@ -1,6 +1,6 @@
 # Go Programming Exercise - To-Do App
 
-## Current phase of development: 3
+## Current phase of development: 4
 
 ## Quickstart
 
