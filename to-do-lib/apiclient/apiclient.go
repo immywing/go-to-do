@@ -18,19 +18,21 @@ type APIClient struct {
 }
 
 func (c *APIClient) Req(
-	ctx context.Context, m string, initem models.ToDo, args map[string]string) (models.ToDo, error) {
+	ctx context.Context, m string, args map[string]string) (models.ToDo, error) {
 
 	var apiURL string
 	var req *http.Request
 	var itemIn models.ToDo
 	var buffer []byte
 	var err error
+
 	userid := args["user-id"]
 	itemid := args["id"]
 	version := args["version"]
 	title := args["title"]
 	priority := args["priority"]
 	complete := args["complete"] == "true"
+
 	if m == http.MethodGet {
 		apiURL = fmt.Sprintf("http://localhost:8081/%s/todo?user_id=%s&id=%s",
 			version, userid, itemid)

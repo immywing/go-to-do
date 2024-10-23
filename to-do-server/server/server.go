@@ -118,10 +118,10 @@ func handleWebForm(w http.ResponseWriter, r *http.Request) {
 		"priority": r.FormValue("priority"),
 		"complete": r.FormValue("complete"),
 	}
-	var itemIn models.ToDo
+	// var itemIn models.ToDo
 	ctx := logging.AddTraceID(r.Context())
 	client := apiclient.NewAPIClient("http://localhost:8081/")
-	if item, err := client.Req(ctx, method, itemIn, args); err != nil {
+	if item, err := client.Req(ctx, method, args); err != nil {
 		writeErrorResponse(w, r, http.StatusBadRequest, err.Error())
 	} else {
 		temp := serveTemplate("./templates/todoitem.html", item)
