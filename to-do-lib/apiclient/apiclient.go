@@ -67,7 +67,7 @@ func (c *APIClient) Req(
 	if err := json.NewDecoder(resp.Body).Decode(&item); err != nil {
 		return models.ToDo{}, err
 	}
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != 200 && resp.StatusCode != 201 {
 		return models.ToDo{}, errors.New(fmt.Sprintf("Request failed with %d", resp.StatusCode))
 	}
 	return item, nil
